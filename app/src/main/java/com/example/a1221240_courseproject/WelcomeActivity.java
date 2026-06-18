@@ -1,9 +1,8 @@
 package com.example.a1221240_courseproject;
 
-
-
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +25,9 @@ public class WelcomeActivity extends AppCompatActivity {
                 Toast.makeText(WelcomeActivity.this,
                         "Connection will be added in Step 2",
                         Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(WelcomeActivity.this, SignInActivity.class);
+                startActivity(intent);
             }
         });
     }

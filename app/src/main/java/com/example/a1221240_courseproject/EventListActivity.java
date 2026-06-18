@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EventListActivity extends AppCompatActivity {
 
@@ -40,10 +41,49 @@ public class EventListActivity extends AppCompatActivity {
         }
 
         for (int i = 0; i < Event.eventsArrayList.size(); i++) {
+            final Event event = Event.eventsArrayList.get(i);
+
             TextView textView = new TextView(EventListActivity.this);
-            textView.setText(Event.eventsArrayList.get(i).toString());
+            textView.setText(event.toString());
             textView.setTextSize(18);
+            textView.setPadding(0, 30, 0, 10);
             linearLayoutEvents.addView(textView);
+
+            Button buttonJoin = new Button(EventListActivity.this);
+            buttonJoin.setText("Join / Reserve");
+            linearLayoutEvents.addView(buttonJoin);
+
+            buttonJoin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(EventListActivity.this, JoinEventActivity.class);
+                    intent.putExtra("eventName", event.getmTitle());
+                    startActivity(intent);
+                }
+            });
+
+            Button buttonFavorite = new Button(EventListActivity.this);
+            buttonFavorite.setText("Add to Favorites");
+            linearLayoutEvents.addView(buttonFavorite);
+
+            buttonFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Favorite favorite = new Favorite(
+                            Favorite.favoritesArrayList.size() + 1,
+                            event.getmTitle(),
+                            event.getmCategory(),
+                            event.getmDate()
+                    );
+
+                    Favorite.favoritesArrayList.add(favorite);
+
+                    Toast.makeText(EventListActivity.this,
+                            "Added to favorites",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         buttonBackHome.setOnClickListener(new View.OnClickListener() {

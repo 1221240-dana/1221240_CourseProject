@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme._1221240_CourseProject">
         <activity
+            android:name=".FavoritesActivity"
+            android:exported="false" />
+        <activity
             android:name=".BookingListActivity"
             android:exported="false" />
         <activity

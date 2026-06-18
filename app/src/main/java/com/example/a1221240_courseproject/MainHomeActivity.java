@@ -61,9 +61,8 @@ public class MainHomeActivity extends AppCompatActivity {
         buttonFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainHomeActivity.this,
-                        "Favorites screen will be added next",
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainHomeActivity.this, FavoritesActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -1,7 +1,6 @@
 package com.example.a1221240_courseproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -49,7 +48,7 @@ public class MainHomeActivity extends AppCompatActivity {
         buttonOpenDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(androidx.core.view.GravityCompat.START);
             }
         });
 

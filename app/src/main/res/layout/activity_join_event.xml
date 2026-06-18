@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/textViewJoinTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Join Event"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/textViewSelectedEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selected Event"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:id="@+id/editTextCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Participation Count"
+            android:inputType="number"
+            android:layout_marginTop="20dp" />
+
+        <Spinner
+            android:id="@+id/spinnerReservationType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/reservation_type_array"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:id="@+id/buttonConfirmBooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm Reservation"
+            android:layout_marginTop="25dp" />
+
+        <Button
+            android:id="@+id/buttonBackEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back to Events"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+</ScrollView>

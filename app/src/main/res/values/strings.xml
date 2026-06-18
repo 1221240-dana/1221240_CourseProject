@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">1221240_CourseProject</string>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="major_array">
+        <item>Computer Engineering</item>
+        <item>Electrical Engineering</item>
+        <item>Computer Science</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="reservation_type_array">
+        <item>Normal</item>
+        <item>VIP</item>
+        <item>Group</item>
+    </string-array>
+</resources>

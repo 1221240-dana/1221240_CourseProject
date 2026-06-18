@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#E8622A</color>
+    <color name="colorPrimaryDark">#C44D1A</color>
+    <color name="colorAccent">#F4A623</color>
+    <color name="colorBackground">#FFF8F0</color>
+    <color name="colorPink">#F06292</color>
+    <color name="colorOrange">#E8622A</color>
+    <color name="colorYellow">#F4A623</color>
+    <color name="colorNavHeader">#F4A623</color>
 </resources>

@@ -10,23 +10,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme._1221240_CourseProject">
-
-        <activity android:name=".FavoritesActivity" android:exported="false" />
-        <activity android:name=".BookingListActivity" android:exported="false" />
-        <activity android:name=".JoinEventActivity" android:exported="false" />
-        <activity android:name=".EventListActivity" android:exported="false" />
-        <activity android:name=".MainHomeActivity" android:exported="false" />
-        <activity android:name=".SignUpActivity" android:exported="false" />
-        <activity android:name=".SignInActivity" android:exported="false" />
-        <activity android:name=".WelcomeActivity" android:exported="false" />
-
-        <activity android:name=".MainActivity" android:exported="true">
+        <activity
+            android:name=".ContactUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FavoritesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BookingListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".JoinEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EventListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

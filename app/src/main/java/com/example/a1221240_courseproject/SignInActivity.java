@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -49,32 +50,48 @@ public class SignInActivity extends AppCompatActivity {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
 
-                String savedEmail = userPreferences.getString("email", "");
-                String savedPassword = userPreferences.getString("password", "");
-
                 if (email.isEmpty() || password.isEmpty()) {
-
                     Toast.makeText(SignInActivity.this,
                             "Please enter email and password",
                             Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                } else if (email.equals(savedEmail) && password.equals(savedPassword)) {
-
+                // Admin check
+                if (email.equals("admin@admin.com") && password.equals("Admin123!")) {
                     if (checkBoxRememberMe.isChecked()) {
                         loginEditor.putString("email", email);
                         loginEditor.commit();
                     }
+                    Toast.makeText(SignInActivity.this,
+                            "Admin login successful",
+                            Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SignInActivity.this, MainHomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return;
+                }
 
+                // Regular user check
+                String savedEmail = userPreferences.getString("email", "");
+                String savedEncryptedPassword = userPreferences.getString("password", "");
+
+                String decryptedPassword = new String(Base64.decode(
+                        savedEncryptedPassword, Base64.DEFAULT));
+
+                if (email.equals(savedEmail) && password.equals(decryptedPassword)) {
+                    if (checkBoxRememberMe.isChecked()) {
+                        loginEditor.putString("email", email);
+                        loginEditor.commit();
+                    }
                     Toast.makeText(SignInActivity.this,
                             "Login successful",
                             Toast.LENGTH_SHORT).show();
-
                     Intent intent = new Intent(SignInActivity.this, MainHomeActivity.class);
                     startActivity(intent);
                     finish();
 
                 } else {
-
                     Toast.makeText(SignInActivity.this,
                             "Invalid email or password",
                             Toast.LENGTH_SHORT).show();

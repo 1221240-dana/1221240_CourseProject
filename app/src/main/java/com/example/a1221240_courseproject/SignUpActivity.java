@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -112,10 +113,13 @@ public class SignUpActivity extends AppCompatActivity {
 
                 } else {
 
+                    String encryptedPassword = Base64.encodeToString(
+                            password.getBytes(), Base64.DEFAULT);
+
                     editor.putString("email", email);
                     editor.putString("firstName", firstName);
                     editor.putString("lastName", lastName);
-                    editor.putString("password", password);
+                    editor.putString("password", encryptedPassword);
                     editor.putString("phone", phone);
                     editor.putString("gender", gender);
                     editor.putString("major", major);

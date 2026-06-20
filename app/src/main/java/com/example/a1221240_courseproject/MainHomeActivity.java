@@ -81,8 +81,7 @@ public class MainHomeActivity extends AppCompatActivity {
                             "Profile Management screen will be added next", Toast.LENGTH_SHORT).show();
 
                 } else if (id == R.id.nav_contact) {
-                    Toast.makeText(MainHomeActivity.this,
-                            "Contact Us screen will be added next", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainHomeActivity.this, ContactUsActivity.class));
 
                 } else if (id == R.id.nav_logout) {
                     startActivity(new Intent(MainHomeActivity.this, SignInActivity.class));
@@ -141,8 +140,7 @@ public class MainHomeActivity extends AppCompatActivity {
         buttonContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainHomeActivity.this,
-                        "Contact Us screen will be added next", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainHomeActivity.this, ContactUsActivity.class));
             }
         });
 

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -18,6 +20,9 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
         buttonConnect = (Button) findViewById(R.id.buttonConnect);
+
+        Animation slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in);
+        buttonConnect.startAnimation(slideIn);
 
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override

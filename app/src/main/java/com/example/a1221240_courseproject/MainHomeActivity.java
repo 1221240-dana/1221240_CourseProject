@@ -73,12 +73,10 @@ public class MainHomeActivity extends AppCompatActivity {
                     startActivity(new Intent(MainHomeActivity.this, FavoritesActivity.class));
 
                 } else if (id == R.id.nav_special) {
-                    Toast.makeText(MainHomeActivity.this,
-                            "Recommended Trips screen will be added next", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainHomeActivity.this, SpecialSectionActivity.class));
 
                 } else if (id == R.id.nav_profile) {
-                    Toast.makeText(MainHomeActivity.this,
-                            "Profile Management screen will be added next", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainHomeActivity.this, ProfileActivity.class));
 
                 } else if (id == R.id.nav_contact) {
                     startActivity(new Intent(MainHomeActivity.this, ContactUsActivity.class));
@@ -124,16 +122,14 @@ public class MainHomeActivity extends AppCompatActivity {
         buttonSpecial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainHomeActivity.this,
-                        "Recommended Trips screen will be added next", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainHomeActivity.this, SpecialSectionActivity.class));
             }
         });
 
         buttonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainHomeActivity.this,
-                        "Profile Management screen will be added next", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainHomeActivity.this, ProfileActivity.class));
             }
         });
 

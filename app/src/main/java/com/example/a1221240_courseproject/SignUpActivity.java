@@ -26,8 +26,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     Button buttonRegister;
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    DatabaseHelper databaseHelper;
+    SharedPreferences loginPreferences;
+    SharedPreferences.Editor loginEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +47,9 @@ public class SignUpActivity extends AppCompatActivity {
 
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
 
-        sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        databaseHelper = new DatabaseHelper(this);
+        loginPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
+        loginEditor = loginPreferences.edit();
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,80 +60,67 @@ public class SignUpActivity extends AppCompatActivity {
                 String password = editTextRegisterPassword.getText().toString();
                 String confirmPassword = editTextConfirmPassword.getText().toString();
                 String phone = editTextPhone.getText().toString();
-
                 String gender = spinnerGender.getSelectedItem().toString();
                 String major = spinnerMajor.getSelectedItem().toString();
 
                 if (email.isEmpty() || firstName.isEmpty() || lastName.isEmpty()
                         || password.isEmpty() || confirmPassword.isEmpty() || phone.isEmpty()) {
-
                     Toast.makeText(SignUpActivity.this,
-                            "Please fill all fields",
-                            Toast.LENGTH_SHORT).show();
+                            "Please fill all fields", Toast.LENGTH_SHORT).show();
 
                 } else if (!email.contains("@")) {
-
                     Toast.makeText(SignUpActivity.this,
-                            "Invalid email",
-                            Toast.LENGTH_SHORT).show();
+                            "Invalid email", Toast.LENGTH_SHORT).show();
 
                 } else if (firstName.length() < 3) {
-
                     Toast.makeText(SignUpActivity.this,
-                            "First name must be at least 3 characters",
-                            Toast.LENGTH_SHORT).show();
+                            "First name must be at least 3 characters", Toast.LENGTH_SHORT).show();
 
                 } else if (lastName.length() < 3) {
-
                     Toast.makeText(SignUpActivity.this,
-                            "Last name must be at least 3 characters",
-                            Toast.LENGTH_SHORT).show();
+                            "Last name must be at least 3 characters", Toast.LENGTH_SHORT).show();
 
                 } else if (password.length() < 6) {
-
                     Toast.makeText(SignUpActivity.this,
-                            "Password must be at least 6 characters",
-                            Toast.LENGTH_SHORT).show();
+                            "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
 
                 } else if (!hasLetter(password)) {
-
                     Toast.makeText(SignUpActivity.this,
-                            "Password must contain at least one letter",
-                            Toast.LENGTH_SHORT).show();
+                            "Password must contain at least one letter", Toast.LENGTH_SHORT).show();
 
                 } else if (!hasNumber(password)) {
-
                     Toast.makeText(SignUpActivity.this,
-                            "Password must contain at least one number",
-                            Toast.LENGTH_SHORT).show();
+                            "Password must contain at least one number", Toast.LENGTH_SHORT).show();
 
                 } else if (!password.equals(confirmPassword)) {
-
                     Toast.makeText(SignUpActivity.this,
-                            "Passwords do not match",
-                            Toast.LENGTH_SHORT).show();
+                            "Passwords do not match", Toast.LENGTH_SHORT).show();
+
+                } else if (databaseHelper.checkEmail(email)) {
+                    Toast.makeText(SignUpActivity.this,
+                            "Email already registered", Toast.LENGTH_SHORT).show();
 
                 } else {
-
                     String encryptedPassword = Base64.encodeToString(
                             password.getBytes(), Base64.DEFAULT);
 
-                    editor.putString("email", email);
-                    editor.putString("firstName", firstName);
-                    editor.putString("lastName", lastName);
-                    editor.putString("password", encryptedPassword);
-                    editor.putString("phone", phone);
-                    editor.putString("gender", gender);
-                    editor.putString("major", major);
-                    editor.commit();
+                    long result = databaseHelper.addUser(email, encryptedPassword,
+                            firstName, lastName, phone, gender, major);
 
-                    Toast.makeText(SignUpActivity.this,
-                            "Registration successful",
-                            Toast.LENGTH_SHORT).show();
+                    if (result != -1) {
+                        loginEditor.putString("currentEmail", email);
+                        loginEditor.commit();
 
-                    Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
-                    startActivity(intent);
-                    finish();
+                        Toast.makeText(SignUpActivity.this,
+                                "Registration successful", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(SignUpActivity.this,
+                                "Registration failed. Try again.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -139,18 +128,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     public boolean hasLetter(String password) {
         for (int i = 0; i < password.length(); i++) {
-            if (Character.isLetter(password.charAt(i))) {
-                return true;
-            }
+            if (Character.isLetter(password.charAt(i))) return true;
         }
         return false;
     }
 
     public boolean hasNumber(String password) {
         for (int i = 0; i < password.length(); i++) {
-            if (Character.isDigit(password.charAt(i))) {
-                return true;
-            }
+            if (Character.isDigit(password.charAt(i))) return true;
         }
         return false;
     }

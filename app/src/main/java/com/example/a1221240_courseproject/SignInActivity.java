@@ -23,7 +23,7 @@ public class SignInActivity extends AppCompatActivity {
     SharedPreferences loginPreferences;
     SharedPreferences.Editor loginEditor;
 
-    SharedPreferences userPreferences;
+    DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +39,10 @@ public class SignInActivity extends AppCompatActivity {
         loginPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
         loginEditor = loginPreferences.edit();
 
-        userPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+        databaseHelper = new DatabaseHelper(this);
 
-        String savedRememberedEmail = loginPreferences.getString("email", "");
-        editTextEmail.setText(savedRememberedEmail);
+        String savedEmail = loginPreferences.getString("email", "");
+        editTextEmail.setText(savedEmail);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,21 +72,22 @@ public class SignInActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Regular user check
-                String savedEmail = userPreferences.getString("email", "");
-                String savedEncryptedPassword = userPreferences.getString("password", "");
+                // Regular user check with encrypted password
+                String encryptedPassword = Base64.encodeToString(
+                        password.getBytes(), Base64.DEFAULT);
 
-                String decryptedPassword = new String(Base64.decode(
-                        savedEncryptedPassword, Base64.DEFAULT));
-
-                if (email.equals(savedEmail) && password.equals(decryptedPassword)) {
+                if (databaseHelper.checkUser(email, encryptedPassword)) {
                     if (checkBoxRememberMe.isChecked()) {
                         loginEditor.putString("email", email);
                         loginEditor.commit();
                     }
+                    loginEditor.putString("currentEmail", email);
+                    loginEditor.commit();
+
                     Toast.makeText(SignInActivity.this,
                             "Login successful",
                             Toast.LENGTH_SHORT).show();
+
                     Intent intent = new Intent(SignInActivity.this, MainHomeActivity.class);
                     startActivity(intent);
                     finish();

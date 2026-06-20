@@ -5,20 +5,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class JoinEventActivity extends AppCompatActivity {
 
+    TextView textViewJoinTitle;
     TextView textViewSelectedEvent;
     EditText editTextCount;
     Spinner spinnerReservationType;
     Button buttonConfirmBooking;
     Button buttonBackEvents;
 
+    DatabaseHelper databaseHelper;
     String eventName;
 
     @Override
@@ -26,59 +33,68 @@ public class JoinEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_event);
 
+        textViewJoinTitle = (TextView) findViewById(R.id.textViewJoinTitle);
         textViewSelectedEvent = (TextView) findViewById(R.id.textViewSelectedEvent);
         editTextCount = (EditText) findViewById(R.id.editTextCount);
         spinnerReservationType = (Spinner) findViewById(R.id.spinnerReservationType);
         buttonConfirmBooking = (Button) findViewById(R.id.buttonConfirmBooking);
         buttonBackEvents = (Button) findViewById(R.id.buttonBackEvents);
 
+        databaseHelper = new DatabaseHelper(this);
+
         eventName = getIntent().getStringExtra("eventName");
+        textViewSelectedEvent.setText("Event: " + eventName);
 
-        if (eventName == null) {
-            eventName = "Unknown Event";
-        }
-
-        textViewSelectedEvent.setText(eventName);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.reservation_type_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerReservationType.setAdapter(adapter);
 
         buttonConfirmBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String countText = editTextCount.getText().toString();
+                String countStr = editTextCount.getText().toString();
                 String reservationType = spinnerReservationType.getSelectedItem().toString();
 
-                if (countText.isEmpty()) {
-
+                if (countStr.isEmpty()) {
                     Toast.makeText(JoinEventActivity.this,
                             "Please enter participation count",
                             Toast.LENGTH_SHORT).show();
-
-                } else {
-                    int count = Integer.parseInt(countText);
-
-                    if (count <= 0) {
-                        Toast.makeText(JoinEventActivity.this,
-                                "Count must be greater than zero",
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        Booking booking = new Booking(
-                                Booking.bookingsArrayList.size() + 1,
-                                eventName,
-                                count,
-                                reservationType,
-                                "Confirmed"
-                        );
-
-                        Booking.bookingsArrayList.add(booking);
-
-                        Toast.makeText(JoinEventActivity.this,
-                                "Reservation confirmed",
-                                Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(JoinEventActivity.this, EventListActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                    return;
                 }
+
+                int count = Integer.parseInt(countStr);
+
+                if (count <= 0) {
+                    Toast.makeText(JoinEventActivity.this,
+                            "Count must be greater than 0",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        .format(new Date());
+
+                // Save to SQLite
+                long result = databaseHelper.addBooking(eventName, count,
+                        reservationType, "Confirmed", currentDate);
+
+                // Also add to static list
+                Booking booking = new Booking();
+                booking.setmBookingId(result);
+                booking.setmEventName(eventName);
+                booking.setmCount(count);
+                booking.setmReservationType(reservationType);
+                booking.setmStatus("Confirmed");
+                Booking.bookingsArrayList.add(booking);
+
+                Toast.makeText(JoinEventActivity.this,
+                        "Reservation confirmed",
+                        Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(JoinEventActivity.this, EventListActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

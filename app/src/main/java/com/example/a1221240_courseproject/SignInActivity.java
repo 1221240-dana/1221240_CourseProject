@@ -66,7 +66,7 @@ public class SignInActivity extends AppCompatActivity {
                     Toast.makeText(SignInActivity.this,
                             "Admin login successful",
                             Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SignInActivity.this, MainHomeActivity.class);
+                    Intent intent = new Intent(SignInActivity.this, AdminHomeActivity.class);
                     startActivity(intent);
                     finish();
                     return;

@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Update Profile"
-            android:backgroundTint="@color/colorOrange"
+            android:backgroundTint="@color/colorButton2"
             android:layout_marginTop="30dp" />
 
         <Button
@@ -102,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Back to Home"
-            android:backgroundTint="@color/colorPink"
+            android:backgroundTint="@color/colorButton1"
             android:layout_marginTop="10dp" />
 
     </LinearLayout>

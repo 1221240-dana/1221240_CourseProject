@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp"
-    android:background="#FFFFFF">
+    android:background="@color/colorBackground">
 
     <TextView
         android:id="@+id/textViewSignInTitle"
@@ -43,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login"
+        android:backgroundTint="@color/colorButton1"
         android:layout_marginTop="20dp" />
 
     <Button
@@ -50,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign Up"
+        android:backgroundTint="@color/colorButton2"
         android:layout_marginTop="10dp" />
 
 </LinearLayout>

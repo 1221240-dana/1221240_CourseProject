@@ -39,7 +39,7 @@
                 android:id="@+id/textViewOverview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome to the Smart University Events application. This app helps students view events, manage reservations, save favorites, and update their profile."
+                android:text="Welcome to  the Smart University Events application. This app helps students view events, manage reservations, save favorites, and update their profile."
                 android:textSize="16sp"
                 android:gravity="center"
                 android:layout_marginTop="20dp" />

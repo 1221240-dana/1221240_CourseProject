@@ -3,6 +3,7 @@ package com.example.a1221240_courseproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,8 @@ public class BookingListActivity extends AppCompatActivity {
     LinearLayout linearLayoutBookings;
     Button buttonBackHomeFromBookings;
 
+    DatabaseHelper databaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,21 +25,31 @@ public class BookingListActivity extends AppCompatActivity {
         linearLayoutBookings = (LinearLayout) findViewById(R.id.linearLayoutBookings);
         buttonBackHomeFromBookings = (Button) findViewById(R.id.buttonBackHomeFromBookings);
 
-        if (Booking.bookingsArrayList.size() == 0) {
+        databaseHelper = new DatabaseHelper(this);
+
+        Cursor cursor = databaseHelper.getAllBookings();
+
+        if (cursor.getCount() == 0) {
             TextView textView = new TextView(BookingListActivity.this);
             textView.setText("No reservations yet.");
             textView.setTextSize(18);
             textView.setPadding(0, 30, 0, 30);
             linearLayoutBookings.addView(textView);
         } else {
-            for (int i = 0; i < Booking.bookingsArrayList.size(); i++) {
+            while (cursor.moveToNext()) {
                 TextView textView = new TextView(BookingListActivity.this);
-                textView.setText(Booking.bookingsArrayList.get(i).toString());
-                textView.setTextSize(18);
+                textView.setText(
+                        "Event: " + cursor.getString(1) + "\n" +
+                                "Count: " + cursor.getInt(2) + "\n" +
+                                "Type: " + cursor.getString(3) + "\n" +
+                                "Status: " + cursor.getString(4) + "\n" +
+                                "Date: " + cursor.getString(5));
+                textView.setTextSize(16);
                 textView.setPadding(0, 30, 0, 30);
                 linearLayoutBookings.addView(textView);
             }
         }
+        cursor.close();
 
         buttonBackHomeFromBookings.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,8 +22,9 @@ public class ProfileActivity extends AppCompatActivity {
     Button buttonUpdateProfile;
     Button buttonBackFromProfile;
 
-    SharedPreferences userPreferences;
-    SharedPreferences.Editor userEditor;
+    DatabaseHelper databaseHelper;
+    SharedPreferences loginPreferences;
+    String currentEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,17 @@ public class ProfileActivity extends AppCompatActivity {
         buttonUpdateProfile = (Button) findViewById(R.id.buttonUpdateProfile);
         buttonBackFromProfile = (Button) findViewById(R.id.buttonBackFromProfile);
 
-        userPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
-        userEditor = userPreferences.edit();
+        databaseHelper = new DatabaseHelper(this);
+        loginPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
+        currentEmail = loginPreferences.getString("currentEmail", "");
 
-        editTextProfileFirstName.setText(userPreferences.getString("firstName", ""));
-        editTextProfileLastName.setText(userPreferences.getString("lastName", ""));
-        editTextProfilePhone.setText(userPreferences.getString("phone", ""));
+        Cursor cursor = databaseHelper.getUserInfo(currentEmail);
+        if (cursor.moveToFirst()) {
+            editTextProfileFirstName.setText(cursor.getString(3));
+            editTextProfileLastName.setText(cursor.getString(4));
+            editTextProfilePhone.setText(cursor.getString(5));
+        }
+        cursor.close();
 
         buttonUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +81,8 @@ public class ProfileActivity extends AppCompatActivity {
                     return;
                 }
 
+                String encryptedPassword = "";
+
                 if (!password.isEmpty()) {
                     if (password.length() < 6) {
                         Toast.makeText(ProfileActivity.this,
@@ -102,13 +112,20 @@ public class ProfileActivity extends AppCompatActivity {
                         return;
                     }
 
-                    userEditor.putString("password", password);
+                    encryptedPassword = Base64.encodeToString(
+                            password.getBytes(), Base64.DEFAULT);
                 }
 
-                userEditor.putString("firstName", firstName);
-                userEditor.putString("lastName", lastName);
-                userEditor.putString("phone", phone);
-                userEditor.commit();
+                if (encryptedPassword.isEmpty()) {
+                    Cursor cursor = databaseHelper.getUserInfo(currentEmail);
+                    if (cursor.moveToFirst()) {
+                        encryptedPassword = cursor.getString(2);
+                    }
+                    cursor.close();
+                }
+
+                databaseHelper.updateUser(currentEmail, firstName, lastName,
+                        phone, encryptedPassword);
 
                 Toast.makeText(ProfileActivity.this,
                         "Profile updated successfully",

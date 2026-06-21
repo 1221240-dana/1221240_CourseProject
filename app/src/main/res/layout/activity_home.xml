@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="☰ Menu"
-                android:backgroundTint="@color/colorPink"
+                android:backgroundTint="@color/colorButton1"
                 android:layout_marginBottom="16dp" />
 
             <TextView
@@ -39,7 +39,7 @@
                 android:id="@+id/textViewOverview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome to  the Smart University Events application. This app helps students view events, manage reservations, save favorites, and update their profile."
+                android:text="Welcome to the Smart University Events application. This app helps students view events, manage reservations, save favorites, and update their profile."
                 android:textSize="16sp"
                 android:gravity="center"
                 android:layout_marginTop="20dp" />
@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Home"
-                android:backgroundTint="@color/colorPink"
+                android:backgroundTint="@color/colorButton1"
                 android:layout_marginTop="30dp" />
 
             <Button
@@ -66,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Events"
-                android:backgroundTint="@color/colorOrange"
+                android:backgroundTint="@color/colorButton2"
                 android:layout_marginTop="10dp" />
 
             <Button
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="My Reservations"
-                android:backgroundTint="@color/colorYellow"
+                android:backgroundTint="@color/colorButton3"
                 android:layout_marginTop="10dp" />
 
             <Button
@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Favorites"
-                android:backgroundTint="@color/colorPink"
+                android:backgroundTint="@color/colorButton1"
                 android:layout_marginTop="10dp" />
 
             <Button
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Recommended Trips"
-                android:backgroundTint="@color/colorOrange"
+                android:backgroundTint="@color/colorButton2"
                 android:layout_marginTop="10dp" />
 
             <Button
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Profile Management"
-                android:backgroundTint="@color/colorYellow"
+                android:backgroundTint="@color/colorButton3"
                 android:layout_marginTop="10dp" />
 
             <Button
@@ -106,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Contact Us"
-                android:backgroundTint="@color/colorPink"
+                android:backgroundTint="@color/colorButton1"
                 android:layout_marginTop="10dp" />
 
             <Button
@@ -114,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Logout"
-                android:backgroundTint="@color/colorOrange"
+                android:backgroundTint="@color/colorButton2"
                 android:layout_marginTop="10dp" />
 
         </LinearLayout>

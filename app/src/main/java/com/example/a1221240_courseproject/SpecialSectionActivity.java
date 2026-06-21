@@ -63,7 +63,7 @@ public class SpecialSectionActivity extends AppCompatActivity {
                 buttonAddFavorite.setText("Add to Favorites");
                 buttonAddFavorite.setBackgroundTintList(
                         ColorStateList.valueOf(
-                                getResources().getColor(R.color.colorOrange)));
+                                getResources().getColor(R.color.colorButton2)));
 
                 final Event selectedEvent = event;
                 buttonAddFavorite.setOnClickListener(new View.OnClickListener() {

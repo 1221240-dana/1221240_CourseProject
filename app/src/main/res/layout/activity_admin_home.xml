@@ -42,19 +42,51 @@
                 android:layout_marginTop="20dp" />
 
             <Button
-                android:id="@+id/buttonViewUsers"
+                android:id="@+id/buttonAddAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="View Users"
+                android:text="Add New Admin"
                 android:backgroundTint="@color/colorButton1"
                 android:layout_marginTop="30dp" />
 
             <Button
-                android:id="@+id/buttonViewEvents"
+                android:id="@+id/buttonViewUsers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="View Events"
+                android:text="View Users"
                 android:backgroundTint="@color/colorButton2"
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:id="@+id/buttonDeleteUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete User"
+                android:backgroundTint="@color/colorButton3"
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:id="@+id/buttonAddEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add New Event"
+                android:backgroundTint="@color/colorButton1"
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:id="@+id/buttonEditEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Event"
+                android:backgroundTint="@color/colorButton2"
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:id="@+id/buttonDeleteEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Event"
+                android:backgroundTint="@color/colorButton3"
                 android:layout_marginTop="10dp" />
 
             <Button
@@ -62,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="View Reservations"
-                android:backgroundTint="@color/colorButton3"
+                android:backgroundTint="@color/colorButton1"
                 android:layout_marginTop="10dp" />
 
             <Button
@@ -70,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Logout"
-                android:backgroundTint="@color/colorButton1"
+                android:backgroundTint="@color/colorButton2"
                 android:layout_marginTop="30dp" />
 
         </LinearLayout>

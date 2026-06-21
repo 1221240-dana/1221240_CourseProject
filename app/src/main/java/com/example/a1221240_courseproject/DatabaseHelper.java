@@ -11,7 +11,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "university_events.db";
     private static final int DATABASE_VERSION = 1;
 
-    // Users table
     public static final String TABLE_USERS = "users";
     public static final String COLUMN_USER_ID = "user_id";
     public static final String COLUMN_USER_EMAIL = "email";
@@ -22,7 +21,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_GENDER = "gender";
     public static final String COLUMN_USER_MAJOR = "major";
 
-    // Events table
     public static final String TABLE_EVENTS = "events";
     public static final String COLUMN_EVENT_ID = "event_id";
     public static final String COLUMN_EVENT_TITLE = "title";
@@ -33,7 +31,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_EVENT_LOCATION = "location";
     public static final String COLUMN_EVENT_SEATS = "seats";
 
-    // Bookings table
     public static final String TABLE_BOOKINGS = "bookings";
     public static final String COLUMN_BOOKING_ID = "booking_id";
     public static final String COLUMN_BOOKING_EVENT_NAME = "event_name";
@@ -80,7 +77,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createEventsTable);
         db.execSQL(createBookingsTable);
 
-        // Insert admin account
         db.execSQL("INSERT INTO " + TABLE_USERS + " VALUES (1, 'admin@admin.com', 'Admin123!', 'Admin', 'Admin', '0000000000', 'Male', 'Other')");
     }
 
@@ -180,5 +176,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USER_PASSWORD, password);
         return db.update(TABLE_USERS, values,
                 COLUMN_USER_EMAIL + "=?", new String[]{email});
+    }
+
+    // Get all users
+    public Cursor getAllUsers() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_USERS, null);
+    }
+
+    // Delete user
+    public int deleteUser(String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_USERS, COLUMN_USER_EMAIL + "=?", new String[]{email});
+    }
+
+    // Delete event
+    public int deleteEvent(String title) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_EVENTS, COLUMN_EVENT_TITLE + "=?", new String[]{title});
     }
 }

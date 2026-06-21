@@ -40,6 +40,21 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         holder.textViewEventDate.setText("Date: " + event.getmDate() + " at " + event.getmTime());
         holder.textViewEventLocation.setText("Location: " + event.getmLocation());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, EventDetailActivity.class);
+                intent.putExtra("title", event.getmTitle());
+                intent.putExtra("description", event.getmDescription());
+                intent.putExtra("category", event.getmCategory());
+                intent.putExtra("date", event.getmDate());
+                intent.putExtra("time", event.getmTime());
+                intent.putExtra("location", event.getmLocation());
+                intent.putExtra("seats", event.getmSeats());
+                context.startActivity(intent);
+            }
+        });
+
         holder.buttonJoinEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

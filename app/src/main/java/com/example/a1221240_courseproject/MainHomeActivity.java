@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,6 +83,11 @@ public class MainHomeActivity extends AppCompatActivity {
                     startActivity(new Intent(MainHomeActivity.this, ContactUsActivity.class));
 
                 } else if (id == R.id.nav_logout) {
+                    SharedPreferences loginPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = loginPreferences.edit();
+                    editor.remove("currentEmail");
+                    editor.remove("email");
+                    editor.commit();
                     startActivity(new Intent(MainHomeActivity.this, SignInActivity.class));
                     finish();
                 }
@@ -143,6 +149,11 @@ public class MainHomeActivity extends AppCompatActivity {
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences loginPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
+                SharedPreferences.Editor editor = loginPreferences.edit();
+                editor.remove("currentEmail");
+                editor.remove("email");
+                editor.commit();
                 startActivity(new Intent(MainHomeActivity.this, SignInActivity.class));
                 finish();
             }

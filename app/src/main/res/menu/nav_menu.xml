@@ -19,8 +19,7 @@
 
     <item
         android:id="@+id/nav_special"
-        android:title="Recommended Trips" />
-
+        android:title="Featured Events" />
     <item
         android:id="@+id/nav_profile"
         android:title="Profile Management" />

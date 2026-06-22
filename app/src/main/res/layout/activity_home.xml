@@ -89,7 +89,7 @@
                 android:id="@+id/buttonSpecial"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Recommended event"
+                android:text="Featured Events"
                 android:backgroundTint="@color/colorButton2"
                 android:layout_marginTop="10dp" />
 

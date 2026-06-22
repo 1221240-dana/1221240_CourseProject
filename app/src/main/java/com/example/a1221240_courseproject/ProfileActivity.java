@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -21,10 +23,14 @@ public class ProfileActivity extends AppCompatActivity {
     EditText editTextProfileConfirmPassword;
     Button buttonUpdateProfile;
     Button buttonBackFromProfile;
+    Button buttonSelectImage;
+    ImageView imageViewProfile;
 
     DatabaseHelper databaseHelper;
     SharedPreferences loginPreferences;
     String currentEmail;
+
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,8 @@ public class ProfileActivity extends AppCompatActivity {
         editTextProfileConfirmPassword = (EditText) findViewById(R.id.editTextProfileConfirmPassword);
         buttonUpdateProfile = (Button) findViewById(R.id.buttonUpdateProfile);
         buttonBackFromProfile = (Button) findViewById(R.id.buttonBackFromProfile);
+        buttonSelectImage = (Button) findViewById(R.id.buttonSelectImage);
+        imageViewProfile = (ImageView) findViewById(R.id.imageViewProfile);
 
         databaseHelper = new DatabaseHelper(this);
         loginPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
@@ -50,6 +58,15 @@ public class ProfileActivity extends AppCompatActivity {
             editTextProfilePhone.setText(cursor.getString(5));
         }
         cursor.close();
+
+        buttonSelectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_IMAGE_REQUEST);
+            }
+        });
 
         buttonUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,5 +158,15 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            imageViewProfile.setImageURI(imageUri);
+        }
     }
 }

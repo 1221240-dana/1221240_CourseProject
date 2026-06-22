@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "university_events.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public static final String TABLE_USERS = "users";
     public static final String COLUMN_USER_ID = "user_id";
@@ -33,6 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_BOOKINGS = "bookings";
     public static final String COLUMN_BOOKING_ID = "booking_id";
+    public static final String COLUMN_BOOKING_USER_EMAIL = "user_email";
     public static final String COLUMN_BOOKING_EVENT_NAME = "event_name";
     public static final String COLUMN_BOOKING_COUNT = "count";
     public static final String COLUMN_BOOKING_TYPE = "reservation_type";
@@ -67,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String createBookingsTable = "CREATE TABLE " + TABLE_BOOKINGS + " (" +
                 COLUMN_BOOKING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_BOOKING_USER_EMAIL + " TEXT, " +
                 COLUMN_BOOKING_EVENT_NAME + " TEXT, " +
                 COLUMN_BOOKING_COUNT + " INTEGER, " +
                 COLUMN_BOOKING_TYPE + " TEXT, " +
@@ -140,10 +142,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insertWithOnConflict(TABLE_EVENTS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
-    // Add booking
-    public long addBooking(String eventName, int count, String type, String status, String date) {
+    // Add booking with user email
+    public long addBooking(String userEmail, String eventName, int count,
+                           String type, String status, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(COLUMN_BOOKING_USER_EMAIL, userEmail);
         values.put(COLUMN_BOOKING_EVENT_NAME, eventName);
         values.put(COLUMN_BOOKING_COUNT, count);
         values.put(COLUMN_BOOKING_TYPE, type);
@@ -152,7 +156,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_BOOKINGS, null, values);
     }
 
-    // Get all bookings
+    // Get bookings by user email
+    public Cursor getBookingsByUser(String userEmail) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_BOOKINGS +
+                " WHERE " + COLUMN_BOOKING_USER_EMAIL + "=?", new String[]{userEmail});
+    }
+
+    // Get all bookings (admin)
     public Cursor getAllBookings() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_BOOKINGS, null);

@@ -3,6 +3,7 @@ package com.example.a1221240_courseproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -27,6 +28,7 @@ public class JoinEventActivity extends AppCompatActivity {
 
     DatabaseHelper databaseHelper;
     String eventName;
+    String currentUserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,9 @@ public class JoinEventActivity extends AppCompatActivity {
         buttonBackEvents = (Button) findViewById(R.id.buttonBackEvents);
 
         databaseHelper = new DatabaseHelper(this);
+
+        SharedPreferences loginPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
+        currentUserEmail = loginPreferences.getString("currentEmail", "");
 
         eventName = getIntent().getStringExtra("eventName");
         textViewSelectedEvent.setText("Event: " + eventName);
@@ -75,11 +80,9 @@ public class JoinEventActivity extends AppCompatActivity {
                 String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                         .format(new Date());
 
-                // Save to SQLite
-                long result = databaseHelper.addBooking(eventName, count,
+                long result = databaseHelper.addBooking(currentUserEmail, eventName, count,
                         reservationType, "Confirmed", currentDate);
 
-                // Also add to static list
                 Booking booking = new Booking();
                 booking.setmBookingId(result);
                 booking.setmEventName(eventName);

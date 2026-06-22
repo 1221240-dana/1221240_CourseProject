@@ -51,7 +51,7 @@ public class SpecialSectionActivity extends AppCompatActivity {
             if (event.getmCategory().equals("Technology") || event.getmCategory().equals("Career")) {
 
                 TextView textViewEvent = new TextView(this);
-                textViewEvent.setText("⭐ " + event.getmTitle() + "\n" +
+                textViewEvent.setText(event.getmTitle() + "\n" +
                         "Category: " + event.getmCategory() + "\n" +
                         "Date: " + event.getmDate() + "\n" +
                         "Location: " + event.getmLocation());
@@ -59,13 +59,35 @@ public class SpecialSectionActivity extends AppCompatActivity {
                 textViewEvent.setPadding(16, 16, 16, 16);
                 linearLayoutSpecial.addView(textViewEvent);
 
+                final Event selectedEvent = event;
+
+                Button buttonOpenDetails = new Button(this);
+                buttonOpenDetails.setText("Open Event Details");
+                buttonOpenDetails.setBackgroundTintList(
+                        ColorStateList.valueOf(
+                                getResources().getColor(R.color.colorButton1)));
+                buttonOpenDetails.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(SpecialSectionActivity.this,
+                                EventDetailActivity.class);
+                        intent.putExtra("title", selectedEvent.getmTitle());
+                        intent.putExtra("description", selectedEvent.getmDescription());
+                        intent.putExtra("category", selectedEvent.getmCategory());
+                        intent.putExtra("date", selectedEvent.getmDate());
+                        intent.putExtra("time", selectedEvent.getmTime());
+                        intent.putExtra("location", selectedEvent.getmLocation());
+                        intent.putExtra("seats", selectedEvent.getmSeats());
+                        startActivity(intent);
+                    }
+                });
+                linearLayoutSpecial.addView(buttonOpenDetails);
+
                 Button buttonAddFavorite = new Button(this);
                 buttonAddFavorite.setText("Add to Favorites");
                 buttonAddFavorite.setBackgroundTintList(
                         ColorStateList.valueOf(
                                 getResources().getColor(R.color.colorButton2)));
-
-                final Event selectedEvent = event;
                 buttonAddFavorite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

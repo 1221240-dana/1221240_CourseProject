@@ -3,6 +3,7 @@ package com.example.a1221240_courseproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,10 @@ public class BookingListActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
-        Cursor cursor = databaseHelper.getAllBookings();
+        SharedPreferences loginPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
+        String currentEmail = loginPreferences.getString("currentEmail", "");
+
+        Cursor cursor = databaseHelper.getBookingsByUser(currentEmail);
 
         if (cursor.getCount() == 0) {
             TextView textView = new TextView(BookingListActivity.this);
@@ -39,11 +43,11 @@ public class BookingListActivity extends AppCompatActivity {
             while (cursor.moveToNext()) {
                 TextView textView = new TextView(BookingListActivity.this);
                 textView.setText(
-                        "Event: " + cursor.getString(1) + "\n" +
-                                "Count: " + cursor.getInt(2) + "\n" +
-                                "Type: " + cursor.getString(3) + "\n" +
-                                "Status: " + cursor.getString(4) + "\n" +
-                                "Date: " + cursor.getString(5));
+                        "Event: " + cursor.getString(2) + "\n" +
+                                "Count: " + cursor.getInt(3) + "\n" +
+                                "Type: " + cursor.getString(4) + "\n" +
+                                "Status: " + cursor.getString(5) + "\n" +
+                                "Date: " + cursor.getString(6));
                 textView.setTextSize(16);
                 textView.setPadding(0, 30, 0, 30);
                 linearLayoutBookings.addView(textView);

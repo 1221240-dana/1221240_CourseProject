@@ -25,6 +25,7 @@ public class AdminHomeActivity extends AppCompatActivity {
     Button buttonViewUsers;
     Button buttonDeleteUser;
     Button buttonAddEvent;
+    Button buttonViewEvents;
     Button buttonEditEvent;
     Button buttonDeleteEvent;
     Button buttonViewReservations;
@@ -47,6 +48,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         buttonViewUsers = (Button) findViewById(R.id.buttonViewUsers);
         buttonDeleteUser = (Button) findViewById(R.id.buttonDeleteUser);
         buttonAddEvent = (Button) findViewById(R.id.buttonAddEvent);
+        buttonViewEvents = (Button) findViewById(R.id.buttonViewEvents);
         buttonEditEvent = (Button) findViewById(R.id.buttonEditEvent);
         buttonDeleteEvent = (Button) findViewById(R.id.buttonDeleteEvent);
         buttonViewReservations = (Button) findViewById(R.id.buttonViewReservations);
@@ -111,6 +113,13 @@ public class AdminHomeActivity extends AppCompatActivity {
             }
         });
 
+        buttonViewEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showEvents();
+            }
+        });
+
         buttonEditEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,7 +171,8 @@ public class AdminHomeActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
         sb.append("Total Events: " + Event.eventsArrayList.size() + "\n\n");
         for (int i = 0; i < Event.eventsArrayList.size(); i++) {
-            sb.append(i + 1).append(". ").append(Event.eventsArrayList.get(i).getmTitle()).append("\n");
+            sb.append(i + 1).append(". ")
+                    .append(Event.eventsArrayList.get(i).getmTitle()).append("\n");
         }
         new AlertDialog.Builder(this)
                 .setTitle("All Events")
@@ -191,7 +201,6 @@ public class AdminHomeActivity extends AppCompatActivity {
     }
 
     private void showAddAdminDialog() {
-        View dialogView = getLayoutInflater().inflate(android.R.layout.simple_list_item_1, null);
         final EditText editTextEmail = new EditText(this);
         editTextEmail.setHint("Admin Email");
         final EditText editTextPassword = new EditText(this);

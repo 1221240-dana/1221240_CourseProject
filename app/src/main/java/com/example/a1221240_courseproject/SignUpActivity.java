@@ -68,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this,
                             "Please fill all fields", Toast.LENGTH_SHORT).show();
 
-                } else if (!email.contains("@")) {
+                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     Toast.makeText(SignUpActivity.this,
                             "Invalid email", Toast.LENGTH_SHORT).show();
 
